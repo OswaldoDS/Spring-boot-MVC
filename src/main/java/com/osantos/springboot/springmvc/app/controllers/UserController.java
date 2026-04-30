@@ -12,10 +12,10 @@ public class UserController {
 
     //@GetMapping({"/view", "/", "/another"})
     //@GetMapping({"/view", "/"}) -> Así se mapea para la raíz es decir localhost:8080 y en /view
-    @GetMapping("/view") //Aquí se asigna la ruta url. localhost:8080/view
+    @GetMapping({"/view", "/", "/another"}) //Aquí se asigna la ruta url. localhost:8080/view
     public String viewData(Model model){
-        model.addAttribute("title","Hola mundo Spring Boot");
-        model.addAttribute("message","Esta es una aplicación de ejemplo usando Spring Boot");
+        model.addAttribute("title","Hola mundo Spring Boot!!!");
+        model.addAttribute("message","Esta es una aplicación de ejemplo usando Spring Boot!!!");
         model.addAttribute("user",new User("Oswaldo", "de los Santos"));
         return "view"; // Aquí se debe poner el mismo nombre que se asignó al templete de html
     }
