@@ -31,8 +31,8 @@ public class UserController {
         return "view"; // Aquí se debe poner el mismo nombre que se asignó al templete de html
     }
 
-    //Implemetando CRUD
-    @GetMapping("/")
+    //Implementando CRUD
+    @GetMapping
     public String list(Model model) {
         model.addAttribute("title", "Listadode usuarios");
         model.addAttribute("users", service.findAll());
@@ -64,12 +64,9 @@ public class UserController {
     //Para cuando se recibe el objeto
     @PostMapping
     public String form(User user, Model model, RedirectAttributes redirect) {
-        String message = "";
-        if (user.getId() > 0) {
-            message = "Usuario: " + user.getName() + " se ha actualizado con éxito!";
-        } else {
-            message = "Usuario: " + user.getName() + " se ha creado con éxito!";
-        }
+        String message = (user.getId() > 0)?
+                "Usuario: " + user.getName() + " se ha actualizado con éxito!":
+                "Usuario: " + user.getName() + " se ha creado con éxito!";
 
         service.save(user); // Puede ser un INSERT o un UPDATE
         redirect.addFlashAttribute("success", message);
