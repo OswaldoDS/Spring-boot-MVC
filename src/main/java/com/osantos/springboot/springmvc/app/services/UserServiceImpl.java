@@ -2,7 +2,7 @@ package com.osantos.springboot.springmvc.app.services;
 
 import com.osantos.springboot.springmvc.app.entities.User;
 import com.osantos.springboot.springmvc.app.repositories.IUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +12,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements IUserService {
 
-    @Autowired
-    private IUserRepository repository;
+//    @Autowired // se inyecta mediante el constructor de forma directa y el atributo debe ser final
+    private final IUserRepository repository;
 
+    public UserServiceImpl(IUserRepository repository) {
+        this.repository = repository;
+    }
 
     @Transactional(readOnly = true) //Si la transacción es solo lectura debe ser true
     @Override
@@ -37,6 +40,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public void remove(Long id) {
-
+        this.repository.deleteById(id);
     }
 }
