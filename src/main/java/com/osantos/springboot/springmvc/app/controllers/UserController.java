@@ -4,16 +4,14 @@ import com.osantos.springboot.springmvc.app.entities.User;
 import com.osantos.springboot.springmvc.app.services.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/users") //Para agregar un prefijo es decir de primer nivel localhost:8080/app/view
+@SessionAttributes({"user"})
 public class UserController {
     private final IUserService service;
 
