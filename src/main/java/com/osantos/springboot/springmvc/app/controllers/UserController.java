@@ -34,7 +34,7 @@ public class UserController {
     //Implementando CRUD
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("title", "Listadode usuarios");
+        model.addAttribute("title", "Listado de usuarios");
         model.addAttribute("users", service.findAll());
         return "list";
     }
@@ -64,7 +64,7 @@ public class UserController {
     //Para cuando se recibe el objeto
     @PostMapping
     public String form(User user, Model model, RedirectAttributes redirect) {
-        String message = (user.getId() > 0)?
+        String message = (user.getId() != null &&  user.getId() > 0)?
                 "Usuario: " + user.getName() + " se ha actualizado con éxito!":
                 "Usuario: " + user.getName() + " se ha creado con éxito!";
 
