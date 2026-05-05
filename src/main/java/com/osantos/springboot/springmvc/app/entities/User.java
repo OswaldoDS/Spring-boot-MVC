@@ -1,6 +1,9 @@
 package com.osantos.springboot.springmvc.app.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +14,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty //Solo para String y válida que no sea vacío (Son reglas)
     private String name;
+    @NotEmpty
     private String lastname;
+    @NotEmpty
+    @Email //Valida que sea email
     private String email;
+    @NotEmpty
+    @Size(min = 4, max = 16)
     private String username;
+    @NotEmpty
     private String password;
 
     @Column(name = "created_at")

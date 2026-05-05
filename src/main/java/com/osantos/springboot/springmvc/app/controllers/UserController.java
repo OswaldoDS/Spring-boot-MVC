@@ -2,9 +2,12 @@ package com.osantos.springboot.springmvc.app.controllers;
 
 import com.osantos.springboot.springmvc.app.entities.User;
 import com.osantos.springboot.springmvc.app.services.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -61,12 +64,19 @@ public class UserController {
 
     //Para cuando se recibe el objeto
     @PostMapping
-    public String form(User user, Model model, RedirectAttributes redirect) {
-        String message = (user.getId() != null &&  user.getId() > 0)?
-                "Usuario: " + user.getName() + " se ha actualizado con éxito!":
+    public String form(@Valid User user, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Validando Formulario");
+            return "form";
+        }
+
+        String message = (user.getId() != null && user.getId() > 0) ?
+                "Usuario: " + user.getName() + " se ha actualizado con éxito!" :
                 "Usuario: " + user.getName() + " se ha creado con éxito!";
 
         service.save(user); // Puede ser un INSERT o un UPDATE
+        status.setComplete(); //Para borrar el objeto una vez que se usa
         redirect.addFlashAttribute("success", message);
         return "redirect:/users";
     }
